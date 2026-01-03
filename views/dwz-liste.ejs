@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>KSV Rochade Göttingen</title>
+    <link rel="SHORTCUT ICON" href="/Images/LOGO.png" type="image/png">
+    <meta name="description" content="KSV Rochade Göttingen Schach Turnier Turniere spielen Verein Schachturnier Schachturniere Schachverein Termine">
+    <link rel="stylesheet" href="/style.css">
+    <meta charset="utf-8">
+    <script src="/script.js"></script>
+</head>
+
+<body>
+
+    <!-- Include header -->
+    <%- include('header') %>
+
+    <section class="content-section container">
+        <div class="Hauptteil">
+            <div class="content">
+                <!-- <h2>
+                    DWZ Rangliste KSV Rochade Göttingen
+                </h2> -->
+                <div id="dwz-liste">
+                    <iframe 
+                        id="dwz-liste-i" 
+                        src="/dwz-liste-dynamic" 
+                        scrolling="no"
+                        frameborder="0"
+                        style="width:100%; height:1600px;">
+                    </iframe>
+                </div>
+                <p class="Quelle">
+                Quelle: <a href="https://www.schachbund.de/verein/70353.html" target="_blank">https://www.schachbund.de/verein/70353.html</a>
+                </p>
+
+            </div>
+
+            <!-- Include sidebar -->
+            <%- include('sidebar') %>
+        </div>
+    </section>
+
+    <!-- Include footer -->
+    <%- include('footer') %>
+
+</body>
+</html>
+

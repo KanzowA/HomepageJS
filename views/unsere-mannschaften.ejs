@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>KSV Rochade Göttingen</title>
+    <link rel="SHORTCUT ICON" href="/Images/LOGO.png" type="image/png">
+    <meta name="description" content="KSV Rochade Göttingen Schach Turnier Turniere spielen Verein Schachturnier Schachturniere Schachverein Termine">
+    <link rel="stylesheet" href="/style.css">
+    <meta charset="utf-8">
+    <script src="/script.js"></script>
+</head>
+
+<body>
+
+    <!-- Include header -->
+    <%- include('header') %>
+
+    <section class="content-section container">
+        <div class="Hauptteil">
+            <div class="content">
+
+                <h1>Unsere Mannschaften</h1>
+
+                <!-- Jugendbundesliga Nord -->
+                <div class="Mannschaft">
+                    <div class="Mannschaft-content">
+                        <h3 class="Mannschaft-title">Jugendbundesliga Nord</h3>
+                        <p class="Mannschaft-text">
+                            Unsere stärkste Jugendmannschaft in der höchsten norddeutschen
+                            Nachwuchsliga.
+                        </p>
+                    </div>
+
+                    <a class="Mannschaft-action"
+                        href="https://nsv-online.de/ligen/jbln-2526/m/8588/"
+                        target="_blank" rel="noopener">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+
+                    </a>
+                </div>
+
+                <!-- Verbandsliga Ost – 1. Mannschaft -->
+                <div class="Mannschaft">
+                    <div class="Mannschaft-content">
+                        <h3 class="Mannschaft-title">Verbandsliga Ost</h3>
+                        <p class="Mannschaft-text">
+                            Die 1. Mannschaft unserer Spielgemeinschaft mit Schachsport
+                            Plesse Bovenden („Union Plesse Göttingen“).
+                        </p>
+                    </div>
+
+                    <a class="Mannschaft-action"
+                        href="https://nsv-online.de/ligen/nsv-2526/m/8352/"
+                        target="_blank" rel="noopener">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                    </a>
+                </div>
+
+                <!-- Bezirksklasse Südniedersachsen – 2. Mannschaft -->
+                <div class="Mannschaft">
+                    <div class="Mannschaft-content">
+                        <h3 class="Mannschaft-title">Bezirksklasse Südniedersachsen</h3>
+                        <p class="Mannschaft-text">
+                            Die 2. Mannschaft unserer Spielgemeinschaft mit Schachsport
+                            Plesse Bovenden („Union Plesse Göttingen“).
+                        </p>
+                    </div>
+
+                    <a class="Mannschaft-action"
+                        href="https://nsv-online.de/ligen/bezirk3-2526/m/8501/"
+                        target="_blank" rel="noopener">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                    </a>
+                </div>
+
+            </div>
+
+            <!-- Include sidebar -->
+            <%- include('sidebar') %>
+        </div>
+    </section>
+
+    <!-- Include footer -->
+    <%- include('footer') %>
+
+    <script>
+        if (window.innerWidth <= 768) {
+            document.querySelectorAll('.Mannschaft[data-link]').forEach(card => {
+                card.addEventListener('click', () => {
+                    window.open(card.dataset.link, '_blank');
+                });
+            });
+        }
+    </script>
+</body>
+</html>
