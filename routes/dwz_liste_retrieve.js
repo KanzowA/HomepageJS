@@ -30,17 +30,9 @@ router.get('/', async (req, res) => {
                 });
         });
 
-        // Concatenate last column to second column and remove last
-        table.find('tr').each((i, row) => {
-            const cells = $(row).find('th, td');
-            if (cells.length >= 3) {
-                const secondCell = cells.eq(1);
-                const lastCell = cells.eq(2);
-                const combinedText = (secondCell.text() + ' ' + lastCell.text()).replace(/\n/g, ' ').trim();
-                secondCell.text(combinedText);
-                lastCell.remove();
-            }
-        });
+        // Remove the rightmost cell on the top row (header)
+        const headerRow = table.find('tr').first();
+        headerRow.find('th').last().remove();
 
         table.find('tr').each((i, row) => {
             $(row).find('td').each((j, cell) => {
@@ -53,6 +45,41 @@ router.get('/', async (req, res) => {
             });
         });
 
+        // Process data rows: concatenate last to second, clean rating
+        table.find('tr').each((i, row) => {
+            if (i > 0) { // Skip header row
+                const cells = $(row).find('td');
+                if (cells.length >= 3) {
+                    // Concatenate last column to second column and remove last
+                    const secondCell = cells.eq(1);
+                    const lastCell = cells.eq(cells.length - 1);
+                    const combinedText = (lastCell.text() + ' ' + secondCell.text()).trim();
+                    secondCell.text(combinedText);
+                    lastCell.remove();
+
+                    // Clean rating in third cell
+                    const thirdCell = cells.eq(2);
+                    const fourthCell = cells.eq(3);
+                    const dwz = thirdCell.text().trim();
+                    const elo = fourthCell.text().trim();
+
+                    let cleaneddwz = dwz;
+                    if (dwz === "Restp." || dwz === "") {
+                        cleaneddwz = "—";
+                    }
+                    else {
+                        cleaneddwz = dwz.split('-')[0];
+                    }
+                    thirdCell.text(cleaneddwz);
+                    let cleanedelo = elo;
+                    if (elo === "-----") {
+                        cleanedelo = "—";
+                    }
+                    fourthCell.text(cleanedelo);
+                }
+            }
+        });
+
         // Minimal HTML page for iframe
         res.send(`
             <!DOCTYPE html>
@@ -60,8 +87,9 @@ router.get('/', async (req, res) => {
             <head>
                 <meta charset="utf-8">
                 <title>DWZ Tabelle</title>
+                <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
                 <style>
-                    table.dwz { width: 100%; font-family: Montserrat, sans-serif;}
+                    table.dwz { width: 100%; font-family: 'Montserrat', sans-serif;}
                     table.dwz th, table.dwz td {
                         padding: 0.4em 0.6em;
                     }
