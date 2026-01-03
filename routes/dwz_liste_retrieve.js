@@ -30,6 +30,18 @@ router.get('/', async (req, res) => {
                 });
         });
 
+        // Concatenate last column to second column and remove last
+        table.find('tr').each((i, row) => {
+            const cells = $(row).find('th, td');
+            if (cells.length >= 3) {
+                const secondCell = cells.eq(1);
+                const lastCell = cells.eq(2);
+                const combinedText = (secondCell.text() + ' ' + lastCell.text()).replace(/\n/g, ' ').trim();
+                secondCell.text(combinedText);
+                lastCell.remove();
+            }
+        });
+
         table.find('tr').each((i, row) => {
             $(row).find('td').each((j, cell) => {
                 const text = $(cell).text();
@@ -49,7 +61,7 @@ router.get('/', async (req, res) => {
                 <meta charset="utf-8">
                 <title>DWZ Tabelle</title>
                 <style>
-                    table.dwz { width: 100%; font-family: Lucida Sans, sans-serif;}
+                    table.dwz { width: 100%; font-family: Montserrat, sans-serif;}
                     table.dwz th, table.dwz td {
                         padding: 0.4em 0.6em;
                     }
