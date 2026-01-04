@@ -10,6 +10,24 @@ const routes = [
     { path: '/unsere-mannschaften', view: 'unsere-mannschaften' },
     { path: '/mitglied-werden', view: 'mitglied-werden' },
     { path: '/dwz-liste', view: 'dwz-liste' },
+    { path: '/archiv', view: 'archiv' },
+    { path: '/verschiedenes', view: 'verschiedenes' },
+    { path: '/impressum', view: 'impressum' },
+    { path: '/datenschutzerklaerung', view: 'datenschutzerklaerung' },
+    { path: '/statut', view: 'statut' },
+    { path: '/rechtliches', view: 'rechtliches' },
+    { path: '/kontakt', view: 'kontakt' },
+    { path: '/vorstand', view: 'vorstand' },
+    { path: '/freunde', view: 'freunde' },
+    { path: '/lustiges', view: 'lustiges' },
+    { path: '/vereinsmeisterschaften', view: 'vereinsmeisterschaften' },
+    { path: '/schnellschach-meisterschaften', view: 'schnellschach-meisterschaften' },
+    { path: '/rekorde', view: 'rekorde' },
+    { path: '/schulschach', view: 'schulschach' },
+    { path: '/sonstiges', view: 'sonstiges' },
+    { path: '/aeltere-beitraege', view: 'aeltere-beitraege' },
+    { path: '/chronik-2008-2014', view: 'chronik-2008-2014' },
+    { path: '/chronik-2015-2021', view: 'chronik-2015-2021' },
     // Add more routes as needed
 ];
 
@@ -37,15 +55,27 @@ routes.forEach(route => {
         if (err) {
             console.error(`Error rendering ${route.view}:`, err);
         } else {
-            // Adjust links for static: /page -> /page.html
+            // Adjust links for static: /page -> /page.html and relative page -> page.html
             let adjustedHtml = html;
             routes.forEach(r => {
                 if (r.path !== '/') {
-                    const link = r.path;
-                    const htmlLink = r.path + '.html';
+                    const link = r.path.slice(1); // remove leading /
+                    const htmlLink = link + '.html';
                     adjustedHtml = adjustedHtml.replace(new RegExp(`href="${link}"`, 'g'), `href="${htmlLink}"`);
+                    adjustedHtml = adjustedHtml.replace(new RegExp(`href="/${link}"`, 'g'), `href="${htmlLink}"`);
+                    // Also adjust with anchors
+                    adjustedHtml = adjustedHtml.replace(new RegExp(`href="${link}#`, 'g'), `href="${htmlLink}#`);
                 }
             });
+            // Adjust asset paths: /style.css -> public/style.css, /Images/ -> public/Images/, etc.
+            adjustedHtml = adjustedHtml.replace(/href="\/style\.css"/g, 'href="public/style.css"');
+            adjustedHtml = adjustedHtml.replace(/src="\/script\.js"/g, 'src="public/script.js"');
+            adjustedHtml = adjustedHtml.replace(/href="\/Images\//g, 'href="public/Images/');
+            adjustedHtml = adjustedHtml.replace(/src="\/Images\//g, 'src="public/Images/');
+            adjustedHtml = adjustedHtml.replace(/href="\/Files\//g, 'href="public/Files/');
+            adjustedHtml = adjustedHtml.replace(/src="\/Files\//g, 'src="public/Files/');
+            // Adjust iframe src for dwz-liste
+            adjustedHtml = adjustedHtml.replace(/src="\/dwz-liste-dynamic"/g, 'src="dwz-liste-dynamic.html"');
             fs.writeFileSync(outputPath, adjustedHtml);
             console.log(`Generated: ${outputPath}`);
         }
